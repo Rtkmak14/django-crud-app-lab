@@ -1,0 +1,21 @@
+{% extends "base.html"%}
+
+{%block head%}
+<title>Beer-Detail</title>
+{%endblock%}
+
+{%block content%}
+<h1>{{beer.name}}</h1>
+
+<ul>
+    <li>Type: {{beer.brewery}}</li>
+    <li>Style: {{beer.style}}</li>
+    <li>Notes: {{beer.notes}}</li>
+</ul>
+
+<div>
+    <a href="{% url 'beer-update' beer.id %}" >Edit</a>
+    <a href="{% url 'beer-delete' beer.id %}" >Delete</a>
+</div>
+
+{%endblock%}

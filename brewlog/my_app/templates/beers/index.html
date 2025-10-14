@@ -1,0 +1,16 @@
+{% extends "base.html"%}
+
+{%block head%}
+<title>Beers</title>
+{%endblock%}
+
+{%block content%}
+<h1>Beer List</h1>
+
+{%for beer in beers%}
+    <ul>
+        <li><a href="{% url 'beer-detail' beer.id %}">{{beer.name}}</li>
+    </ul>
+{%endfor%}
+
+{%endblock%}
