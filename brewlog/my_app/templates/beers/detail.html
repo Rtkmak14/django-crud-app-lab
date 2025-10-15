@@ -1,21 +1,39 @@
-{% extends "base.html"%}
+{% extends "base.html" %}
 
-{%block head%}
-<title>Beer-Detail</title>
-{%endblock%}
+{% block head %}
+  <title>Beer Detail</title>
+{% endblock %}
 
-{%block content%}
-<h1>{{beer.name}}</h1>
+{% block content %}
+  <h1>{{ beer.name }}</h1>
 
-<ul>
-    <li>Type: {{beer.brewery}}</li>
-    <li>Style: {{beer.style}}</li>
-    <li>Notes: {{beer.notes}}</li>
-</ul>
+  <ul>
+    <li>Brewery: {{ beer.brewery }}</li>
+    <li>Style: {{ beer.style }}</li>
+    <li>Notes: {{ beer.notes }}</li>
+  </ul>
 
-<div>
-    <a href="{% url 'beer-update' beer.id %}" >Edit</a>
-    <a href="{% url 'beer-delete' beer.id %}" >Delete</a>
-</div>
+  <div>
+    <a href="{% url 'beer-update' beer.id %}">Edit</a>
+    <a href="{% url 'beer-delete' beer.id %}">Delete</a>
+  </div>
 
-{%endblock%}
+  <h2>Tasting Locations</h2>
+  <ul>
+    {% for tasting in tastings %}
+      <li>{{ tasting.name }} — {{ tasting.city }}, {{ tasting.state }}
+        <a href="{% url 'tasting-update' tasting.id %}">Edit</a>
+        <a href="{% url 'tasting-delete' tasting.id %}">Delete</a>
+      </li>
+    {% empty %}
+      <li>No tastings recorded yet.</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Add a Tasting</h2>
+  <form method="POST" action="{% url 'add-tasting' beer.id %}">
+    {% csrf_token %}
+    {{ tasting_form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+{% endblock %}
