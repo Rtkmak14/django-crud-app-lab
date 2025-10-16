@@ -11,8 +11,19 @@
   <body>
     <nav>
         <ul>
+          {% if user.is_authenticated %}
             <li><a href="{% url 'beer-index' %}">All Beers</a></li>
             <li><a href="{% url 'beer-create'%}"> Add a Beer</a></li>
+            <li>
+                <form id="logout-form" method="post" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button type="submit">Log out</button>
+                </form>
+            </li>
+          {%else %}
+            <li><a href="{% url 'home' %}">Login</a></li>
+            <li><a href="{% url 'signup' %}">Sign Up</a></li>
+          {%endif%}
         </ul>
       </nav>
     {% block content %}
